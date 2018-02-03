@@ -35,13 +35,14 @@ for company in company_list:
         tracker_file.close()
         if already_gathered == False:
                 company = company.rstrip()
+                tracker_file = file(tracker_filepath, "a+")
+                tracker_file.write(company + "\n")
+                tracker_file.close()
                 kw_list = []
                 kw_list.append(company)
                 trend_request.build_payload(kw_list, timeframe=data_gathering_timeframe)
                 interest_over_time = trend_request.interest_over_time()
                 if interest_over_time.empty:
-                        no_data_file = file(no_data_filepath, "a+")
-                        no_data_file.write(company + "\n")
                         print("no data found for " + company)
                 else:
                         tracker_file = file(tracker_filepath, "a+")
